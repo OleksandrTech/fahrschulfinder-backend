@@ -38,6 +38,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "@nestjs/cli": "^11.0.7",
     "@nestjs/core": "^11.1.4",
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/mapped-types": "^2.1.0",
