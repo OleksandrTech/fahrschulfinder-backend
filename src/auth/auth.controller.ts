@@ -8,8 +8,16 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register-school-admin')
-  registerSchoolAdmin(@Body() dto: CreateSchoolAdminDto) {
-    return this.authService.registerSchoolAdmin(dto);
+  async registerSchoolAdmin(@Body() dto: CreateSchoolAdminDto) {
+    try {
+      console.log('Controller received registration request:', { email: dto.email, schoolName: dto.schoolName });
+      const result = await this.authService.registerSchoolAdmin(dto);
+      console.log('Controller registration successful');
+      return result;
+    } catch (error) {
+      console.error('Controller registration error:', error);
+      throw error;
+    }
   }
 
   @Post('login')
