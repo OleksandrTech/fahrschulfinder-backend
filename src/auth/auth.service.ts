@@ -14,35 +14,51 @@ export class AuthService {
   ) {}
 
   async registerSchoolAdmin(dto: CreateSchoolAdminDto) {
-    // Проверка email
-    const existing = await this.prisma.schoolAdmin.findUnique({ where: { email: dto.email } });
-    if (existing) throw new BadRequestException('Email already in use');
+    try {
+      console.log('Starting registration for:', dto.email);
+      
+      // Проверка email
+      console.log('Checking if email exists...');
+      const existing = await this.prisma.schoolAdmin.findUnique({ where: { email: dto.email } });
+      if (existing) throw new BadRequestException('Email already in use');
+      console.log('Email check passed');
 
-    // Хэширование пароля
-    const hash = await bcrypt.hash(dto.password, 10);
+      // Хэширование пароля (reduced rounds for faster processing)
+      console.log('Hashing password...');
+      const hash = await bcrypt.hash(dto.password, 8);
+      console.log('Password hashed successfully');
 
-    // Создание DrivingSchool
-    const drivingSchool = await this.prisma.drivingSchool.create({
-      data: {
-        name: dto.schoolName,
-        address: dto.address,
-        phone: dto.phone,
-        city: dto.city,
-        email: dto.email,
-        // Remove problematic fields for now - they have default values in schema
-      },
-    });
+      // Создание DrivingSchool
+      console.log('Creating driving school...');
+      const drivingSchool = await this.prisma.drivingSchool.create({
+        data: {
+          name: dto.schoolName,
+          address: dto.address,
+          phone: dto.phone,
+          city: dto.city,
+          email: dto.email,
+          // Remove problematic fields for now - they have default values in schema
+        },
+      });
+      console.log('Driving school created with ID:', drivingSchool.id);
 
-    // Создание SchoolAdmin
-    const schoolAdmin = await this.prisma.schoolAdmin.create({
-      data: {
-        email: dto.email,
-        password: hash,
-        drivingSchoolId: drivingSchool.id,
-      },
-    });
+      // Создание SchoolAdmin
+      console.log('Creating school admin...');
+      const schoolAdmin = await this.prisma.schoolAdmin.create({
+        data: {
+          email: dto.email,
+          password: hash,
+          drivingSchoolId: drivingSchool.id,
+        },
+      });
+      console.log('School admin created with ID:', schoolAdmin.id);
 
-    return { message: 'School admin registered successfully' };
+      console.log('Registration completed successfully');
+      return { message: 'School admin registered successfully' };
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+    }
   }
 
   async login(dto: LoginDto) {
