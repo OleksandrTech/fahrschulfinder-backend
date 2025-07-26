@@ -6,6 +6,21 @@ import { UpdateDrivingSchoolDto } from './dto/update-driving-school.dto';
 export class DrivingSchoolService {
   constructor(private prisma: PrismaService) {}
 
+  async findAll(city?: string) {
+    const whereClause = city
+      ? {
+          city: {
+            equals: city,
+            mode: 'insensitive' as const, // Use 'as const' for strict typing
+          },
+        }
+      : {}; // If no city, the where clause is an empty object, returning all records
+  
+    return this.prisma.drivingSchool.findMany({
+      where: whereClause,
+    });
+  }
+
   async isOwner(adminId: number, schoolId: number): Promise<boolean> {
     const school = await this.prisma.drivingSchool.findUnique({
       where: { id: schoolId },

@@ -7,6 +7,8 @@ import {
   UseGuards,
   Req,
   ForbiddenException,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
@@ -17,6 +19,11 @@ import { DrivingSchoolService } from './driving-school.service';
 @Controller('driving-schools')
 export class DrivingSchoolController {
   constructor(private readonly drivingSchoolService: DrivingSchoolService) {}
+  
+  @Get()
+  async findAll(@Query('city') city?: string) {
+    return this.drivingSchoolService.findAll(city);
+  }
 
   @Put(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)

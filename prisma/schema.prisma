@@ -18,45 +18,49 @@ model SchoolAdmin {
 }
 
 model DrivingSchool {
-  id                Int      @id @default(autoincrement())
-  name              String
-  address           String
-  branches          String? // филиалы (если есть)
-  phone             String
-  email             String
-  website           String?  // сайт (если есть)
-  socialLinks       String? // соцсети (если есть)
-  workingHours      String?  // часы работы (можно сделать отдельной сущностью, если нужно)
-  city              String  // район (если нужно отдельно)
-  area              String?  // район (если нужно отдельно)
-  licenseTypes      String? // Führerscheinklassen (B, A, C, ...)
-  isAutomatic       Boolean? // Automatik
-  isManual          Boolean?  // Schaltung
-  baseFee           Decimal? // Grundgebühr
-  pricePerLesson    Decimal?  // Preis pro Fahrstunde (стандарт)
-  pricePerNight     Decimal? // Preis pro Fahrstunde (ночь/автобан/дальняя поездка)
-  priceSpecial      Decimal? // Preis für Sonderfahrten
-  theoryIncluded    Boolean?  // Theoriekurs включен?
-  theoryPrice       Decimal? // Цена теории отдельно
-  firstAidAvailable Boolean?  // Erste-Hilfe-Kurs предоставляется?
-  firstAidPrice     Decimal? // Цена Erste-Hilfe-Kurs
-  eyeTestAvailable  Boolean?  // Sehtest предоставляется?
-  eyeTestPrice      Decimal? // Цена Sehtest
-  registrationTUV   Boolean?  // Anmeldung beim TÜV / DEKRA включена?
-  examPrice         Decimal? // Preis für Prüfung (практика/теория)
-  avgTotalPrice     Decimal? // Durchschnittlicher Endpreis
-  languages         String? // Sprachen der Ausbildung
-  supportDisabled   Boolean?  // Unterstützung für Menschen mit Einschränkungen
-  digitalLessons    Boolean?  // Digitaler Unterricht verfügbar?
-  onlineRegistration Boolean? // Online-Anmeldung möglich?
-  intensiveCourses  Boolean?  // Intensivkurse / Ferienkurse
-  offersForSeniors  Boolean?  // Angebote für Senioren/Erwachsene
-  bf17Special       Boolean?  // Специализация на „Begleitetes Fahren ab 17“
-  financingOptions  String?  // Finanzierungsmöglichkeiten
-  successRate       Decimal? // Erfolgsquote
-  description       String?  // Описание/особенности
-  createdAt         DateTime @default(now())
-  schoolAdmin       SchoolAdmin?
+  id                                  Int      @id @default(autoincrement())
+  name                                String
+  address                             String
+  branches                            Json?
+  phone                               String
+  email                               String
+  websiteUrl                          String?
+  socialMediaLinks                    Json?
+  openingHours                        String?
+  city                                String
+  serviceArea                         String?
+  licenseClasses                      String[] @default([])
+  transmissionType                    String[] @default([])
+  baseFee                             Float?   @db.Real
+  pricePerStandardLesson              Float?   @db.Real
+  pricePerSpecialLesson               Float?   @db.Real
+  theoryCourseIncluded                Boolean? @default(false)
+  theoryCoursePrice                   Float?   @db.Real
+  firstAidCourseOffered               Boolean? @default(false)
+  firstAidCoursePrice                 Float?   @db.Real
+  visionTestOffered                   Boolean? @default(false)
+  visionTestPrice                     Float?   @db.Real
+  tuevDekraRegistrationIncluded       Boolean? @default(false)
+  practicalExamFee                    Float?   @db.Real
+  theoryExamFee                       Float?   @db.Real
+  averageFinalPrice                   Float?   @db.Real
+  trainingLanguages                   String[] @default([])
+  supportForDisabled                  Boolean? @default(false)
+  hasDigitalClasses                   Boolean? @default(false)
+  hasOnlineRegistration               Boolean? @default(false)
+  offersIntensiveCourses              Boolean? @default(false)
+  specialOffers                       String[] @default([])
+  specializationInAccompaniedDriving17 Boolean? @default(false)
+  financingOptions                    String[] @default([])
+  successRate                         Float?   @db.Real
+  logoUrl                             String?
+  galleryImageUrls                    String[] @default([])
+  videoPresentationUrl                String?
+  allowReviews                        Boolean? @default(true)
+  canRespondToReviews                 Boolean? @default(false)
+  description                         String?
+  createdAt                           DateTime @default(now())
+  schoolAdmin                         SchoolAdmin?
 }
 
 model SuperAdmin {

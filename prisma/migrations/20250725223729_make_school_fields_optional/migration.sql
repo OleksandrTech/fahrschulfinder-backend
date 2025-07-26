@@ -1,0 +1,16 @@
+-- AlterTable
+ALTER TABLE "DrivingSchool" ALTER COLUMN "firstAidCourseOffered" SET DEFAULT false,
+ALTER COLUMN "galleryImageUrls" SET DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "hasDigitalClasses" SET DEFAULT false,
+ALTER COLUMN "hasOnlineRegistration" SET DEFAULT false,
+ALTER COLUMN "licenseClasses" SET DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "offersIntensiveCourses" SET DEFAULT false,
+ALTER COLUMN "specialOffers" SET DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "specializationInAccompaniedDriving17" SET DEFAULT false,
+ALTER COLUMN "supportForDisabled" SET DEFAULT false,
+ALTER COLUMN "theoryCourseIncluded" SET DEFAULT false,
+ALTER COLUMN "trainingLanguages" SET DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "transmissionType" SET DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "tuevDekraRegistrationIncluded" SET DEFAULT false,
+ALTER COLUMN "visionTestOffered" SET DEFAULT false,
+ALTER COLUMN "financingOptions" SET DEFAULT ARRAY[]::TEXT[];
