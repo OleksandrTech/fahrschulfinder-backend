@@ -29,12 +29,7 @@ export class AuthService {
         phone: dto.phone,
         city: dto.city,
         email: dto.email,
-        licenseClasses: [],
-        transmissionType: [],
-        trainingLanguages: [],
-        specialOffers: [],
-        financingOptions: [],
-        galleryImageUrls: [],
+        // Remove problematic fields for now - they have default values in schema
       },
     });
 
